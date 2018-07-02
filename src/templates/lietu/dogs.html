@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block static %}
+<style>
+    .dog-cell {
+        width: 100%;
+        height: 100px;
+        /*margin: 1px 0;*/
+        padding: 1px 0;
+        /*border: 1px black solid;*/
+        text-align: center;
+    }
+
+    .left {
+        float: left
+    }
+
+    .right {
+        float: right
+    }
+
+    .dog-msg {
+        width: 80%;
+        display: inline-block;
+        height: 100px;
+        background-color: #eaeaea;
+    }
+
+    .dog-msg .dog-view {
+        line-height: 30px;
+    }
+
+    .dog-msg .dog-view:after {
+        content: '.';
+        clear: both
+    }
+
+    .dog-msg .dog-label {
+        display: inline-block;
+        max-width: 200px;
+        height: 20px;
+        margin: 0 10px;
+    }
+
+    .dog-msg .dog-info {
+        height: 80px;
+        padding: 3px 5px;
+    }
+
+    #dog-num {
+        display: None;
+    }
+
+    .post-form {
+        display: inline-block;
+        width: 20%;
+        height: 100px;
+        background-color: #F5F5DC;
+    }
+
+    .post-form .sub-cell {
+        margin: 2px;
+        padding: 2px;
+        display: block;
+        vertical-align: middle;
+    }
+
+    .post-form #order-input {
+        width: 90%;
+        height: 40px;
+        border-color: #bbccdd;
+    }
+
+    .post-form #sub-btn {
+        width: 80px;
+        /*border-color: #bbccdd;*/
+        color: #444444;
+    }
+
+    .sub-ret {
+        display: None;
+        position: relative;
+        width: 100%;
+        min-height: 90px;
+        max-height: 200px;
+        background-color: tan;
+        /*max-height: 300px;*/
+    }
+
+    .sub-ret .ret-cell {
+        width: 100%;
+        line-height: 30px;
+        border-bottom: solid 1px #c4dce8;
+        text-align: left;
+    }
+
+</style>
+{% endblock %}
+{% block main %}
+<ul class="dog-list">
+    {% for dog in dog_list %}
+    <li class="dog-cell">
+        <div class="dog-msg">
+            <div class="dog-view">
+                <div class="dog-label left"><b>{{dog.dog_name}}</b></div>
+                <ul class="right">
+                    <li class="dog-label">训练者：{{dog.dog_trainer}}</li>
+                    <li class="dog-label">分组：{{dog.dog_group}}</li>
+                    <li class="dog-label">使用：{{dog.use_times}}</li>
+                    <li class="dog-label">获赞：{{dog.work_zan}}</li>
+                    <li class="dog-label">生日：{{dog.create_time}}</li>
+                </ul>
+            </div>
+            <div class="dog-info">
+                <p>{{dog.dog_info}}</p>
+            </div>
+        </div>
+
+        <div class="post-form right">
+            <label for="order-input" class="sub-cell left">请输入参数：</label>
+            <textarea class="sub-cell" id="order-input" name="order_id" ></textarea>
+            <!--{% csrf_token %}-->
+            <button class="sub-cell right" id="sub-btn" type="submit" onclick="sub(this)">GoTrace</button>
+            <input class="sub-cell" id="dog-num" name="order_id" value="{{dog.id}}" type="text">
+        </div>
+
+        <div class="sub-ret">
+        </div>
+    </li>
+    {% empty %}
+    还没狗狗--!
+    {% endfor %}
+</ul>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    function sub(t) {
+        var that = $(t);
+        console.log(that);
+        $.ajax({
+            type: 'GET',
+//            contentType: 'application/json;multipart/x-mixed-replace;',
+            url: '/trace/',
+            data: {
+                pk: that.next().val(),
+                order_id: that.prev().val()
+            },
+//            dataType: 'json',
+            success: function (d) {
+                var html = "";
+                console.log(d);
+                for (var i in d) {
+                    if (d[i]) {
+                        html += "<li class='ret-cell'><b class='ret-name'>" + i +
+                            ":</b> <span class='ret-desc'>" + d[i] + "</span></li>";
+                    }
+                }
+
+                that.parent().next().append(html);
+                that.parent().next().slideDown();
+            }
+        })
+    }
+</script>
+{% endblock %}
+

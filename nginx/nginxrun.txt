@@ -1,0 +1,1 @@
+docker run -p 8090:80 --name lietunginx --network=blabla -v $(pwd)/nginx/www:/www -v $(pwd)/static:/static -v $(pwd)/nginx/conf.d:/etc/nginx/conf.d -v $(pwd)/nginx/log:/var/log/nginx -d nginx

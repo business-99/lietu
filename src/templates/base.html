@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load lietu_tags %}
+<html lang="en">
+<head>
+    <title>dog-trace-rabbit</title>
+    <!-- meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keyword" content="dog">
+    <meta name="descriptions" content="xxx">
+    <!-- css -->
+    {% block static %} {% endblock %}
+    <style>
+        body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea, select {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font: 12px "宋体", "Arial Narrow", HELVETICA;
+            background: #F5F5F5;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        a {
+            color: #2d374b;
+            text-decoration: none
+        }
+
+        a:hover {
+            color: #cd0200;
+            text-decoration: underline
+        }
+
+        em {
+            font-style: normal
+        }
+
+        li {
+            list-style: none
+        }
+
+        img {
+            border: 0;
+            vertical-align: middle
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        p {
+            word-wrap: break-word
+        }
+
+    </style>
+    <style>
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background: #fff;
+        }
+
+        /*--------header------------*/
+        .header {
+            height: 60px;
+            background: #9ACD32;
+            /*background-image: url("../static/img/back.jpg");*/
+        }
+
+        .logo {
+            width: 10%;
+            display: inline-block;
+            text-align: center;
+        }
+
+        #logo-img {
+            /*display: None;*/
+            border: solid 2px #747755;
+            width: auto;
+            height: 56px;
+            padding: 0 18px;
+        }
+
+        .site-pic {
+            display: inline-block;
+            background-color: #9ACD32;
+            float: right;
+            width: 90%;
+            text-align: center;
+        }
+
+        .dog-gif, .rabbit-gif {
+            height: 60px;
+            width: auto;
+        }
+
+        /*--------navigation------------*/
+        .navigation {
+            height: 40px;
+        }
+
+        .nav-collapse {
+            background-color: #5897fb;
+        }
+
+        .nav-bar {
+            display: inline-block;
+            min-width: 60px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .nav-bar:hover {
+            color: red;
+            background-color: #fffccf;
+        }
+
+        .nav-bar:active {
+            color: #fffccf;
+            background-color: #2d374b;
+        }
+
+        /*--------main------------*/
+        .main .container {
+            /*background-color: thistle;*/
+            height: 760px;
+        }
+
+        /*--------footer------------*/
+        .footer {
+            text-align: center;
+            /*background-color: #f5dd5d;*/
+        }
+
+        .footer .foot-content {
+            width: 100%;
+            line-height: 65px;
+            background: #F5F5F5;
+            border-top: solid 1px #edecd6;
+        }
+
+    </style>
+    <!-- js -->
+    <script src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+<!--header-->
+<div class="header">
+    <div class="container">
+        <div class="logo">
+            <img id="logo-img" src="{% static 'img/doglogo.jpg' %}">
+        </div>
+{#        <div><b>猎兔运维辅助</b></div>#}
+        <div class="site-pic">
+            <img class="rabbit-gif" src="{% static 'img/sa.png' %}">
+            <span class="rabbit-gif"></span>
+        </div>
+    </div>
+</div>
+
+<!--navigation-->
+<div class="navigation">
+    <div class="container">
+        <div class="nav-collapse">
+            {% get_dog_groups as groups %}
+            <ul>
+                <li class="nav-bar">
+                    <a href="{% url 'lietu:index'%}"> 首页 </a>
+                </li>
+                {% for group in groups %}
+                <li class="nav-bar">
+                    <a href="{% url 'lietu:group' group.pk %}">
+                        {{ group.name }}
+                    </a>
+                </li>
+                {% empty %}
+                暂无分组
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--main content-->
+<div class="main">
+    <div class="container">
+        <div class="main-content">
+            {% block main %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<div class="footer">
+    <div class="container">
+        <div class="foot-content">
+            小兔子乖乖，
+            把门儿开开！
+            快点儿开开，
+            我要进来。
+        </div>
+    </div>
+</div>
+
+</body>
+<!--script-->
+{% block script %}
+{% endblock %}
+</html>
