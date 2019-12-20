@@ -25,7 +25,7 @@ SECRET_KEY = 'y&frh@6$kk=-xs)maqheuny8s8(_bq6nn5u!k5ivs$a7p-tpdj'
 DEBUG = True
 # DEBUG = False
 host_ip = os.getenv('HOST_IP')
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', host_ip]
+ALLOWED_HOSTS = ['*']
 print('---------ALLOWED_HOSTS: %s --------' % ALLOWED_HOSTS)
 
 # Application definition
