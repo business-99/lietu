@@ -1,4 +1,4 @@
-Django==1.11
+Django==1.11.28
 PyMySQL
 pytz
 cx_Oracle==5.3
